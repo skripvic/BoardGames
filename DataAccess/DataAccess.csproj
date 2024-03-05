@@ -15,7 +15,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BuisinessLogic\BuisinessLogic.csproj" />
-    <ProjectReference Include="..\DomainLayer\DomainLayer.csproj" />
     <ProjectReference Include="..\Presentation\Presentation.csproj" />
   </ItemGroup>
 
