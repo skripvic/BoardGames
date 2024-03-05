@@ -5,9 +5,9 @@ VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{17A79CCE-D771-40DC-8628-36B47DAFB2E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation", "Presentation\Presentation.csproj", "{4B7FA352-7B27-4FE2-85D6-3BF6C532A939}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Presentation", "Presentation\Presentation.csproj", "{4B7FA352-7B27-4FE2-85D6-3BF6C532A939}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuisinessLogic", "BuisinessLogic\BuisinessLogic.csproj", "{BAEE5473-51C4-4F4F-8A87-3EDCA75CBB5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuisinessLogic", "BuisinessLogic\BuisinessLogic.csproj", "{BAEE5473-51C4-4F4F-8A87-3EDCA75CBB5F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainLayer", "DomainLayer\DomainLayer.csproj", "{F29079DB-77B5-4D5F-9303-9B97382A081E}"
 EndProject

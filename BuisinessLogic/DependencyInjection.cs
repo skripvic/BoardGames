@@ -1,6 +1,6 @@
 namespace BuisinessLogic
 {
-    public class Program
+    public static class DependencyInjection
     {
         public static void Main(string[] args)
         {

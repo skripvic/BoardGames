@@ -10,19 +10,19 @@
         
         public string TitleEnglish { get; private set; }
         
-        public string photoUrl { get; private set; }
+        public string PhotoUrl { get; private set; }
         
-        public int playersMin { get; private set; }
+        public int PlayersMin { get; private set; }
         
-        public int playersMax { get; private set; }
+        public int PlayersMax { get; private set; }
         
-        public int ageMin { get; private set; }
+        public int AgeMin { get; private set; }
         
-        public int playTimeMin { get; private set; }
+        public int PlayTimeMin { get; private set; }
         
-        public int playTimeMax { get; private set; }
+        public int PlayTimeMax { get; private set; }
         
-        public int year { get; private set; }
+        public int Year { get; private set; }
         
         public Game() { }
 
