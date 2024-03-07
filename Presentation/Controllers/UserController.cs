@@ -1,4 +1,4 @@
-﻿using BuisinessLogic.Dto;
+﻿using BuisinessLogic.Dto.Users;
 using BuisinessLogic.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

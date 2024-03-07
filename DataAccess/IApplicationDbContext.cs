@@ -1,5 +1,5 @@
 ﻿using DomainLayer.Entities;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess
 {

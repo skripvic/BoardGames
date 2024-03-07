@@ -1,4 +1,4 @@
-﻿using BuisinessLogic.Dto;
+﻿using BuisinessLogic.Dto.Users;
 using BuisinessLogic.Exceptions;
 using DataAccess;
 using MediatR;
@@ -17,16 +17,16 @@ namespace BuisinessLogic.Queries
 
         public class GetUserInfoQueryHandler : IRequestHandler<GetUserInfoQuery, GetUserInfoResponse>
         {
-            private readonly IApplicationDbContext _systemDbContext;
+            private readonly IApplicationDbContext _applicationDb;
 
-            public GetUserInfoQueryHandler(IApplicationDbContext systemDbContext)
+            public GetUserInfoQueryHandler(IApplicationDbContext applicationDb)
             {
-                _systemDbContext = systemDbContext;
+                _applicationDb = applicationDb;
             }
 
             public async Task<GetUserInfoResponse> Handle(GetUserInfoQuery request, CancellationToken cancellationToken)
             {
-                var user = await _systemDbContext.Users
+                var user = await _applicationDb.Users
                     .FirstOrDefaultAsync(u => u.Id == request.UserId, cancellationToken);
 
                 if (user is null)
