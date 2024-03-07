@@ -4,13 +4,13 @@
     {
         public int Id { get; private set; }
         
-        public string Alias { get; private set; }
+        public string Alias { get; private set; } = string.Empty;
         
-        public string TitleRussian { get; private set; }
+        public string TitleRussian { get; private set; } = string.Empty;
         
-        public string TitleEnglish { get; private set; }
+        public string TitleEnglish { get; private set; } = string.Empty;
         
-        public string PhotoUrl { get; private set; }
+        public string PhotoUrl { get; private set; } = string.Empty;
         
         public int PlayersMin { get; private set; }
         

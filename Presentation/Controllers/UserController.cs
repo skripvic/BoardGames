@@ -1,7 +1,7 @@
 ﻿using BuisinessLogic.Dto;
+using BuisinessLogic.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Controllers
 {
@@ -18,11 +18,9 @@ namespace DataAccess.Controllers
             _mediator = mediator;
         }
 
-/*
         [HttpGet("getUserInfo/{userId:guid}")]
         public Task<GetUserInfoResponse> getUserInfo(Guid userId) {
-            //return _mediator.Send(new);
+            return _mediator.Send(new GetUserInfoQuery(userId));
         }
-*/
     }
 }

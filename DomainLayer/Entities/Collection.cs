@@ -4,9 +4,9 @@
     {
         public int Id { get; private set; }
         
-        public string Name { get; private set; }
+        public string Name { get; private set; } = string.Empty;
         
-        public User user { get; private set; }
+        public User User { get; private set; } = new User();
 
         public IList<Game> Games { get; private set; } = new List<Game>();
         

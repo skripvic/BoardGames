@@ -2,11 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using Presentation.Configurations;
 
-namespace Presentation
+namespace DataAccess
 {
-    public class SystemDbContext : DbContext, ISystemDbContext
+    public class ApplicationDbContext : DbContext, IApplicationDbContext
     {
-
+        public ApplicationDbContext(DbContextOptions options) : base(options)
+        {
+        }
         public DbSet<User> Users => Set<User>();
 
         public DbSet<Collection> Collections => Set<Collection>();

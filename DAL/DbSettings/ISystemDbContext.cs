@@ -1,8 +1,6 @@
-﻿using DomainLayer.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
 
-
-namespace Presentation
+namespace DAL.DbSettings
 {
     public interface ISystemDbContext
     {

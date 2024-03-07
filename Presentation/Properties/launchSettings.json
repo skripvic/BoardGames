@@ -1,12 +1,14 @@
 {
   "profiles": {
-    "Presentation": {
+    "Backend": {
       "commandName": "Project",
+      "dotnetRunMessages": true,
       "launchBrowser": true,
+      "launchUrl": "swagger/index.html",
+      "applicationUrl": "http://localhost:5192",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "applicationUrl": "https://localhost:55835;http://localhost:55836"
+      }
     }
   }
 }
