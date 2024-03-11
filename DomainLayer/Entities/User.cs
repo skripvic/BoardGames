@@ -11,5 +11,11 @@
         public string Password { get; private set; } = string.Empty;
         
         public User() { }
+
+        public User(string name, string email)
+        {
+            Name = name;
+            Email = email;
+        }
     }
 }

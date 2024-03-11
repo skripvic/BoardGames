@@ -22,5 +22,13 @@ namespace DataAccess.Controllers
         public Task<GetUserInfoResponse> getUserInfo(Guid userId) {
             return _mediator.Send(new GetUserInfoQuery(userId));
         }
+
+        [HttpGet("getUserList")]
+        public Task<ICollection<GetUserListDto>> getUserList()
+        {
+            return _mediator.Send(new GetUserListQuery());
+        }
+
+
     }
 }

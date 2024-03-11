@@ -10,7 +10,7 @@ namespace DataAccess
 
             services.AddDbContext<ApplicationDbContext>(opt => opt.UseSqlServer(connectionString));
 
-            //services.AddScoped<IApplicationDbContext>(isp => isp.GetRequiredService<ApplicationDbContext>());
+            services.AddScoped<IApplicationDbContext>(isp => isp.GetRequiredService<ApplicationDbContext>());
 
             return services;
         }

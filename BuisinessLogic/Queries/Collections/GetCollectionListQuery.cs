@@ -34,4 +34,3 @@ namespace BuisinessLogic.Queries.Collections
     }
 
 }
-}
