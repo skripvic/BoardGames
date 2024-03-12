@@ -1,7 +1,6 @@
 ﻿using BuisinessLogic.Dto.Users;
 using DataAccess;
 using DomainLayer.Entities;
-using Microsoft.EntityFrameworkCore;
 using MediatR;
 
 namespace BuisinessLogic.Commands.Users

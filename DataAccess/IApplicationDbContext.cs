@@ -10,5 +10,7 @@ namespace DataAccess
         DbSet<Collection> Collections { get; }
 
         DbSet<Game> Games { get; }
+
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

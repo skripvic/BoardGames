@@ -16,9 +16,4 @@
     <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Commands\Collections\" />
-    <Folder Include="Commands\Games\" />
-  </ItemGroup>
-
 </Project>

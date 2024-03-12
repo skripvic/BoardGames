@@ -20,9 +20,10 @@ namespace BuisinessLogic.Queries.Collections
             {
 
                 var users = await _applicationDb
-                    .Users
+                    .Collections
                     .Select(u => new GetCollectionListDto()
                     {
+                        Id = u.Id,
                         Name = u.Name,
                     })
                     .ToListAsync(cancellationToken);

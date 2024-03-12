@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240311052346_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240312071845_Initial_Migration")]
+    partial class Initial_Migration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,21 @@ namespace DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("CollectionGame", b =>
+                {
+                    b.Property<int>("CollectionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GamesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CollectionId", "GamesId");
+
+                    b.HasIndex("GamesId");
+
+                    b.ToTable("GameCollections", (string)null);
+                });
 
             modelBuilder.Entity("DomainLayer.Entities.Collection", b =>
                 {
@@ -64,9 +79,6 @@ namespace DataAccess.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
-                    b.Property<int?>("CollectionId")
-                        .HasColumnType("int");
-
                     b.Property<string>("PhotoUrl")
                         .IsRequired()
                         .HasMaxLength(512)
@@ -99,8 +111,6 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CollectionId");
-
                     b.ToTable("Games", (string)null);
                 });
 
@@ -129,6 +139,21 @@ namespace DataAccess.Migrations
                     b.ToTable("User", (string)null);
                 });
 
+            modelBuilder.Entity("CollectionGame", b =>
+                {
+                    b.HasOne("DomainLayer.Entities.Collection", null)
+                        .WithMany()
+                        .HasForeignKey("CollectionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DomainLayer.Entities.Game", null)
+                        .WithMany()
+                        .HasForeignKey("GamesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("DomainLayer.Entities.Collection", b =>
                 {
                     b.HasOne("DomainLayer.Entities.User", "User")
@@ -138,18 +163,6 @@ namespace DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("DomainLayer.Entities.Game", b =>
-                {
-                    b.HasOne("DomainLayer.Entities.Collection", null)
-                        .WithMany("Games")
-                        .HasForeignKey("CollectionId");
-                });
-
-            modelBuilder.Entity("DomainLayer.Entities.Collection", b =>
-                {
-                    b.Navigation("Games");
                 });
 #pragma warning restore 612, 618
         }

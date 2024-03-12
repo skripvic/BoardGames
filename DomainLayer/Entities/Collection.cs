@@ -12,5 +12,15 @@
         
         public Collection() { }
 
+        public Collection(string name, User user)
+        {
+            Name = name;
+            User = user;
+        }
+
+        public void UpdateCollection(string name)
+        {
+            Name = name;
+        }
     }
 }

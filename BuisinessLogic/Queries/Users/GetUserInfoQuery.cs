@@ -26,8 +26,9 @@ namespace BuisinessLogic.Queries
 
             public async Task<GetUserInfoResponse> Handle(GetUserInfoQuery request, CancellationToken cancellationToken)
             {
+                
                 var user = await _applicationDb.Users
-                    .FirstOrDefaultAsync(u => u.Id == request.UserId, cancellationToken);
+                    .FindAsync(request.UserId, cancellationToken);
 
                 if (user is null)
                 {

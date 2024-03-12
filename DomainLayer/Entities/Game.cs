@@ -26,5 +26,32 @@
         
         public Game() { }
 
+        public Game(string alias, string titleRussian, string titleEnglish, string photoUrl, int playersMin, int playersMax, int ageMin, int playTimeMin, int playTimeMax, int year)
+        {
+            Alias = alias;
+            TitleRussian = titleRussian;
+            TitleEnglish = titleEnglish;
+            PhotoUrl = photoUrl;
+            PlayersMin = playersMin;
+            PlayersMax = playersMax;
+            AgeMin = ageMin;
+            PlayTimeMin = playTimeMin;
+            PlayTimeMax = playTimeMax;
+            Year = year;
+        }
+        
+        public void UpdateGame(string alias, string titleRussian, string titleEnglish, string photoUrl, int playersMin, int playersMax, int ageMin, int playTimeMin, int playTimeMax, int year)
+        {
+            Alias = alias;
+            TitleRussian = titleRussian;
+            TitleEnglish = titleEnglish;
+            PhotoUrl = photoUrl;
+            PlayersMin = playersMin;
+            PlayersMax = playersMax;
+            AgeMin = ageMin;
+            PlayTimeMin = playTimeMin;
+            PlayTimeMax = playTimeMax;
+            Year = year;
+        }
     }
 }

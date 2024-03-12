@@ -17,5 +17,11 @@
             Name = name;
             Email = email;
         }
+        
+        public void UpdateUser(string name, string email)
+        {
+            Name = name;
+            Email = email;
+        }
     }
 }

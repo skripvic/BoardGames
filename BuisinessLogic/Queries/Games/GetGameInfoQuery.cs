@@ -26,9 +26,8 @@ namespace BuisinessLogic.Queries.Games
 
             public async Task<GetGameInfoResponse> Handle(GetGameInfoQuery request, CancellationToken cancellationToken)
             {
-                var game = await _context
-                    .Games
-                    .FirstOrDefaultAsync(x => x.Id == request.GameId, cancellationToken);
+                var game = await _context.Games
+                    .FindAsync(request.GameId, cancellationToken);
 
                 if (game == null)
                 {

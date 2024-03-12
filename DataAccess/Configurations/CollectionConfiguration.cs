@@ -13,10 +13,15 @@ namespace Presentation.Configurations
 
             builder.HasKey(x => x.Id);
 
-            builder
-                .Property(x => x.Name)
+            builder.Property(x => x.Name)
                 .HasMaxLength(EntityConstants.Collections.Name.Max);
 
+            builder.HasOne(x => x.User)
+                .WithMany();
+
+            builder.HasMany(u => u.Games)
+                .WithMany()
+                .UsingEntity(cfg => cfg.ToTable("GameCollections"));
         }
     }
 }
