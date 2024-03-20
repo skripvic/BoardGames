@@ -1,26 +1,31 @@
-﻿namespace DomainLayer.Entities
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace DomainLayer.Entities
 {
-    public class User
+    public class User : IdentityUser<Guid>
     {
-        public Guid Id { get; private set; }
+        public override string UserName { get; set; } = string.Empty;
 
-        public string Name { get; private set; } = string.Empty;
+        public override string Email { get; set; } = string.Empty;
 
-        public string Email { get; private set; } = string.Empty;
+        public IList<RefreshToken> RefreshTokens { get; private set; } = new List<RefreshToken>();
 
-        public string Password { get; private set; } = string.Empty;
-        
+        public void AddRefreshToken(RefreshToken refreshToken)
+        {
+            RefreshTokens.Add(refreshToken);
+        }
+
         public User() { }
 
         public User(string name, string email)
         {
-            Name = name;
+            UserName = name;
             Email = email;
         }
         
         public void UpdateUser(string name, string email)
         {
-            Name = name;
+            UserName = name;
             Email = email;
         }
     }

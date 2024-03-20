@@ -7,7 +7,7 @@ namespace BuisinessLogic.Commands.Users
 {
     public class CreateUserCommand : IRequest<CreateUserCommandResponse>
     {
-        public string Name { get; init; } = string.Empty;
+        public string UserName { get; init; } = string.Empty;
 
         public string Email { get; init; } = string.Empty;
 
@@ -24,7 +24,7 @@ namespace BuisinessLogic.Commands.Users
             {
                 var newUser = new User
                 (
-                    request.Name,
+                    request.UserName,
                     request.Email
                 );
 

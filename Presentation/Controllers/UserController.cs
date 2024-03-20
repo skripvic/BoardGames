@@ -1,6 +1,9 @@
-﻿using BuisinessLogic.Commands.Users;
+﻿using BuisinessLogic.Auth.Base;
+using BuisinessLogic.Commands.Auth;
+using BuisinessLogic.Commands.Users;
 using BuisinessLogic.Dto.Users;
 using BuisinessLogic.Queries;
+using DomainLayer.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,8 +31,20 @@ namespace DataAccess.Controllers
             return _mediator.Send(new GetUserListQuery(), HttpContext.RequestAborted);
         }
 
-        [HttpPost("createUser")]
-        public Task<CreateUserCommandResponse> createUser(CreateUserCommand command)
+        [HttpPost("registration")]
+        public Task<AuthResponse> registration(RegistrationCommand command)
+        {
+            return _mediator.Send(command, HttpContext.RequestAborted);
+        }
+
+        [HttpPost("signIn")]
+        public Task<AuthResponse> signIn(SignInCommand command)
+        {
+            return _mediator.Send(command, HttpContext.RequestAborted);
+        }
+
+        [HttpPost("refreshToken")]
+        public Task<AuthResponse> refreshToken(RefreshTokenCommand command)
         {
             return _mediator.Send(command, HttpContext.RequestAborted);
         }

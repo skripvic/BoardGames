@@ -14,7 +14,7 @@ namespace Presentation.Configurations
             builder.HasKey(u => u.Id);
 
             builder
-                .Property(u => u.Name)
+                .Property(u => u.UserName)
                 .HasMaxLength(EntityConstants.User.Name.Max);
 
             builder

@@ -2,7 +2,6 @@
 using BuisinessLogic.Exceptions;
 using DataAccess;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace BuisinessLogic.Queries
 {
@@ -32,12 +31,12 @@ namespace BuisinessLogic.Queries
 
                 if (user is null)
                 {
-                    throw new EntityNotFoundException("Сотрудник не найден");
+                    throw new EntityNotFoundException("Пользователь не найден");
                 }
 
                 return new GetUserInfoResponse
                 {
-                    Name = user.Name,
+                    UserName = user.UserName,
                     Email = user.Email,
 
                 };

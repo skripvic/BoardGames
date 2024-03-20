@@ -8,7 +8,7 @@ namespace BuisinessLogic.Commands.Users
     {
         public Guid Id { get; init; }
 
-        public string Name { get; init; } = string.Empty;
+        public string UserName { get; init; } = string.Empty;
 
         public string Email { get; init; } = string.Empty;
 
@@ -30,7 +30,7 @@ namespace BuisinessLogic.Commands.Users
                     throw new EntityNotFoundException("Пользователь не найден");
                 }
 
-                user.UpdateUser(request.Name, request.Email);
+                user.UpdateUser(request.UserName, request.Email);
 
                 await _context.SaveChangesAsync(cancellationToken);
 
