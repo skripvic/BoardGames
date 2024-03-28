@@ -42,8 +42,8 @@ namespace BuisinessLogic.Commands.Games
                 var newGame = new Game
                     (
                         request.Alias,
-                        request.TitleEnglish,
                         request.TitleRussian,
+                        request.TitleEnglish,
                         request.PhotoUrl,
                         request.PlayersMin,
                         request.PlayersMax,

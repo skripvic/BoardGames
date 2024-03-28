@@ -100,7 +100,7 @@ namespace BuisinessLogic.Auth
 
         public async Task<AuthResponse> SignInAsync(string email, string password, CancellationToken cancellationToken)
         {
-            var user = await _userManager.FindByNameAsync(email);
+            var user = await _userManager.FindByEmailAsync(email);
 
             if (user is null || await _userManager.CheckPasswordAsync(user, password) is false)
             {

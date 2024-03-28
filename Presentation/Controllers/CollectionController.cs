@@ -23,10 +23,10 @@ namespace Presentation.Controllers
             return _mediator.Send(new GetCollectionInfoQuery(collectionId), HttpContext.RequestAborted);
         }
 
-        [HttpGet("getCollectionList")]
-        public Task<ICollection<GetCollectionListDto>> getCollectionList()
+        [HttpGet("getCollectionList/{userId:guid}")]
+        public Task<ICollection<GetCollectionListDto>> getCollectionList(Guid userId)
         {
-            return _mediator.Send(new GetCollectionListQuery(), HttpContext.RequestAborted);
+            return _mediator.Send(new GetCollectionListQuery(userId), HttpContext.RequestAborted);
         }
 
         [HttpGet("getGamesInCollectionList/{collectionId:int}")]

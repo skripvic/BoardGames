@@ -30,8 +30,10 @@ namespace BuisinessLogic.Commands.Collections
                 }
 
                 var collection = await _context.Collections
+                    .Where(x => x.Id == request.collectionId)
                     .Include(x => x.Games)
-                    .FirstOrDefaultAsync(x => x.Id == request.collectionId, cancellationToken);
+                    .FirstOrDefaultAsync(cancellationToken);
+
 
                 if (collection == null)
                 {

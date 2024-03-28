@@ -8,8 +8,6 @@ namespace BuisinessLogic.Commands.Collections
     {
         public int Id { get; init; }
 
-        public string Name { get; init; } = string.Empty;
-
         public class DeleteCollectionCommandHandler : IRequestHandler<DeleteCollectionCommand>
         {
             private readonly IApplicationDbContext _context;
