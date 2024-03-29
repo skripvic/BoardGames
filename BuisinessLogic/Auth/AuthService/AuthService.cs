@@ -11,7 +11,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace BuisinessLogic.Auth
+namespace BuisinessLogic.Auth.AuthService
 {
     public class AuthService : IAuthService
     {
@@ -27,13 +27,13 @@ namespace BuisinessLogic.Auth
             _dbContext = dbContext;
         }
 
-        public String CreateAccessToken(User user)
+        public string CreateJwt(User user)
         {
             var now = DateTime.UtcNow;
             var claims = new List<Claim>
             {
                 new(AppClaimTypes.UserId, user.Id.ToString()),
-                new(AppClaimTypes.UserName, user.UserName),
+                new(AppClaimTypes.UserEmail, user.Email),
                 new(AppClaimTypes.IssuedAt, now.ToString()),
             };
 
@@ -41,23 +41,14 @@ namespace BuisinessLogic.Auth
 
             var jwt = new JwtSecurityToken(
                 claims: claims,
-                expires: now.Add(TimeSpan.FromMinutes(_authSettings.AccessTokenLifetimeMinutes)),
+                expires: now.Add(TimeSpan.FromMinutes(_authSettings.JwtLifetimeMinutes)),
                 notBefore: now,
                 signingCredentials: new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256));
 
             return new JwtSecurityTokenHandler().WriteToken(jwt);
         }
 
-        public RefreshToken CreateRefreshToken(User user)
-        {
-            var now = DateTime.UtcNow;
-            var refreshToken = new RefreshToken(user, now, now.AddDays(_authSettings.RefreshTokenLifetimeDays));
-
-            user.AddRefreshToken(refreshToken);
-            return refreshToken;
-        }
-
-        public User GetUserFromAccessToken(string accessToken)
+        public User GetUserFromJwt(string jwt)
         {
             var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authSettings.SecretKey!));
 
@@ -72,7 +63,7 @@ namespace BuisinessLogic.Auth
 
             var tokenHandler = new JwtSecurityTokenHandler();
 
-            var principal = tokenHandler.ValidateToken(accessToken, tokenValidationParameters, out var securityToken);
+            var principal = tokenHandler.ValidateToken(jwt, tokenValidationParameters, out var securityToken);
             if (securityToken is not JwtSecurityToken jwtSecurityToken
                 || !jwtSecurityToken.Header.Alg
                     .Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
@@ -107,43 +98,42 @@ namespace BuisinessLogic.Auth
                 throw new BadRequestException("Неверный логин или пароль");
             }
 
-            await _dbContext.RefreshTokens
-                .Where(t => t.ValidUntil <= DateTime.UtcNow)
-                .ExecuteDeleteAsync(cancellationToken);
-
-            var accessToken = CreateAccessToken(user);
-            var refreshToken = CreateRefreshToken(user);
+            var jwt = CreateJwt(user);
             await _userManager.UpdateAsync(user);
 
-            return new AuthResponse(accessToken, refreshToken.Id.ToString());
+            return new AuthResponse(jwt);
         }
 
-        public async Task<AuthResponse> RefreshTokenAsync(string accessToken, string refreshToken, CancellationToken cancellationToken)
+        public Task<ValidateJwtResponse> ValidateJwt(string jwt)
         {
-            var user = GetUserFromAccessToken(accessToken);
+            var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authSettings.SecretKey!));
 
-            var existingRefreshToken = await _dbContext.RefreshTokens
-                .FirstOrDefaultAsync(t => t.Id == Guid.Parse(refreshToken), cancellationToken);
-
-            if (existingRefreshToken is null)
+            var tokenValidationParameters = new TokenValidationParameters
             {
-                throw new BadRequestException("Invalid access or refresh token.");
-            }
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                ValidateLifetime = false,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = signingKey,
+            };
 
-            if (existingRefreshToken.ValidUntil <= DateTime.UtcNow)
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+            try 
             {
-                _dbContext.RefreshTokens.Remove(existingRefreshToken);
-                await _dbContext.SaveChangesAsync(cancellationToken);
-                throw new BadRequestException("Invalid access or refresh token.");
+                var principal = tokenHandler.ValidateToken(jwt, tokenValidationParameters, out var securityToken);
+                if (securityToken is not JwtSecurityToken jwtSecurityToken
+                    || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    return Task.FromResult(new ValidateJwtResponse(false));
+                }
+
+                return Task.FromResult(new ValidateJwtResponse(true)); 
             }
-
-            var newAccessToken = CreateAccessToken(user);
-            var newRefreshToken = CreateRefreshToken(user);
-
-            _dbContext.RefreshTokens.Remove(existingRefreshToken);
-            await _dbContext.SaveChangesAsync(cancellationToken);
-
-            return new AuthResponse(newAccessToken, newRefreshToken.Id.ToString());
+            catch (Exception ex)
+            {
+                return Task.FromException<ValidateJwtResponse>(ex);
+            }
         }
     }
 }

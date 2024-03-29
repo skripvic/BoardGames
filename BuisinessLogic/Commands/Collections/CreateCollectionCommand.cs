@@ -1,4 +1,5 @@
-﻿using BuisinessLogic.Dto.Collections;
+﻿using BuisinessLogic.Auth.CurrentUser;
+using BuisinessLogic.Dto.Collections;
 using BuisinessLogic.Exceptions;
 using DataAccess;
 using DomainLayer.Entities;
@@ -10,22 +11,21 @@ namespace BuisinessLogic.Commands.Collections
     {
         public string Name { get; init; } = string.Empty;
 
-        public Guid userId { get; init; }
-
         public class CreateCollectionCommandHandler : IRequestHandler<CreateCollectionCommand, CreateCollectionCommandResponse>
         {
             private readonly IApplicationDbContext _context;
+            private readonly ICurrentUser _currentUser;
 
-            public CreateCollectionCommandHandler(IApplicationDbContext context)
+            public CreateCollectionCommandHandler(IApplicationDbContext context, ICurrentUser currentUser)
             {
                 _context = context;
+                _currentUser = currentUser;
             }
 
+
             public async Task<CreateCollectionCommandResponse> Handle(CreateCollectionCommand request, CancellationToken cancellationToken)
-            {
-                //TODO: переделать когда будет авторизация (брать авторизованного пользователя)
-                
-                var user = await _context.Users.FindAsync(request.userId, cancellationToken);
+            {                
+                var user = await _context.Users.FindAsync(_currentUser.Id, cancellationToken);
 
                 if (user == null) 
                 {

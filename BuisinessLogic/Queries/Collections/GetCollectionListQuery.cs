@@ -1,4 +1,5 @@
-﻿using BuisinessLogic.Dto.Collections;
+﻿using BuisinessLogic.Auth.CurrentUser;
+using BuisinessLogic.Dto.Collections;
 using BuisinessLogic.Exceptions;
 using DataAccess;
 using MediatR;
@@ -9,30 +10,20 @@ namespace BuisinessLogic.Queries.Collections
     public class GetCollectionListQuery : IRequest<ICollection<GetCollectionListDto>>
     {
 
-        public GetCollectionListQuery(Guid userId)
-        {
-            this.userId = userId;
-        }
-
-        private Guid userId { get; init; }
-
         public sealed class GetCollectionListQueryHandler : IRequestHandler<GetCollectionListQuery, ICollection<GetCollectionListDto>>
         {
             private readonly IApplicationDbContext _applicationDb;
+            private readonly ICurrentUser _currentUser;
 
-            public GetCollectionListQueryHandler(IApplicationDbContext applicationDb)
+            public GetCollectionListQueryHandler(IApplicationDbContext applicationDb, ICurrentUser currentUser)
             {
                 _applicationDb = applicationDb;
+                _currentUser = currentUser;
             }
 
             public async Task<ICollection<GetCollectionListDto>> Handle(GetCollectionListQuery request, CancellationToken cancellationToken)
             {
-                var user = await _applicationDb.Users.FindAsync(request.userId, cancellationToken);
-
-                if (user == null)
-                {
-                    throw new EntityNotFoundException("Пользователь не найден");
-                }
+                var user = await _applicationDb.Users.FindAsync(_currentUser.Id, cancellationToken);
 
                 var collections = await _applicationDb
                     .Collections

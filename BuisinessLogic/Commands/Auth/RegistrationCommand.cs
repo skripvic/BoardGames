@@ -9,7 +9,7 @@ namespace BuisinessLogic.Commands.Auth
 {
     public class RegistrationCommand: IRequest<AuthResponse>
     {
-        public string UserName { get; init; } = string.Empty;
+        public string Name { get; init; } = string.Empty;
 
         public string Email { get; init; } = string.Empty;
 
@@ -30,7 +30,7 @@ namespace BuisinessLogic.Commands.Auth
             {
                 var newUser = new User
                 (
-                    request.UserName,
+                    request.Name,
                     request.Email
                 );
 

@@ -26,7 +26,7 @@ namespace BuisinessLogic.Queries
                     .Select(u => new GetUserListDto()
                     {
                         Id = u.Id,
-                        UserName = u.UserName,
+                        Name = u.Name,
                         Email = u.Email,
                     })
                     .ToListAsync(cancellationToken);

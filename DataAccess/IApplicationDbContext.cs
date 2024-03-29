@@ -11,8 +11,6 @@ namespace DataAccess
 
         DbSet<Game> Games { get; }
 
-        DbSet<RefreshToken> RefreshTokens { get; }
-
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

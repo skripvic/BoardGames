@@ -36,7 +36,7 @@ namespace BuisinessLogic.Queries
 
                 return new GetUserInfoResponse
                 {
-                    UserName = user.UserName,
+                    Name = user.Name,
                     Email = user.Email,
 
                 };

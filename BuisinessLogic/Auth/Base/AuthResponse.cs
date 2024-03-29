@@ -1,4 +1,4 @@
 ﻿namespace BuisinessLogic.Auth.Base
 {
-    public record AuthResponse(string AccessToken, string RefreshToken);
+    public record AuthResponse(string jwt);
 }

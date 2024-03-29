@@ -26,7 +26,7 @@ namespace BuisinessLogic.Queries.Collections
             public async Task<ICollection<GetGamesInCollectionListDto>> Handle(GetGamesInCollectionListQuery request, CancellationToken cancellationToken)
             {
 
-                var users = await _applicationDb.Collections
+                var games = await _applicationDb.Collections
                     .Include(x => x.Games)
                     .Where(x => x.Id == request.collectionId)
                     .SelectMany(x => x.Games)
@@ -40,7 +40,7 @@ namespace BuisinessLogic.Queries.Collections
                     })
                     .ToListAsync(cancellationToken);
 
-                return users;
+                return games;
             }
 
         }

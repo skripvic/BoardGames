@@ -2,12 +2,14 @@
 using BuisinessLogic.Dto.Games;
 using BuisinessLogic.Queries.Games;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class GameController : ControllerBase
     {
         private readonly IMediator _mediator;

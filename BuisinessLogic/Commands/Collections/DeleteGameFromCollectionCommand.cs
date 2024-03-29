@@ -1,4 +1,5 @@
-﻿using BuisinessLogic.Exceptions;
+﻿using BuisinessLogic.Auth.CurrentUser;
+using BuisinessLogic.Exceptions;
 using DataAccess;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -14,10 +15,12 @@ namespace BuisinessLogic.Commands.Collections
         public class DeleteGameFromCollectionCommandHandler : IRequestHandler<DeleteGameFromCollectionCommand>
         {
             private readonly IApplicationDbContext _context;
+            private readonly ICurrentUser _currentUser;
 
-            public DeleteGameFromCollectionCommandHandler(IApplicationDbContext context)
+            public DeleteGameFromCollectionCommandHandler(IApplicationDbContext context, ICurrentUser currentUser)
             {
                 _context = context;
+                _currentUser = currentUser;
             }
 
             public async Task Handle(DeleteGameFromCollectionCommand request, CancellationToken cancellationToken)
@@ -36,6 +39,13 @@ namespace BuisinessLogic.Commands.Collections
                 if (collection == null)
                 {
                     throw new EntityNotFoundException("Коллекция не найдена");
+                }
+
+                var user = await _context.Users.FindAsync(_currentUser.Id, cancellationToken);
+
+                if (collection.User != user)
+                {
+                    throw new UnauthorizedAccessException("Коллекция не принадлежит текущему пользователю");
                 }
 
                 if (collection.Games.All(x => x.Id != game.Id))

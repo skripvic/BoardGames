@@ -1,4 +1,5 @@
-﻿using BuisinessLogic.Dto.Collections;
+﻿using BuisinessLogic.Auth.CurrentUser;
+using BuisinessLogic.Dto.Collections;
 using BuisinessLogic.Exceptions;
 using DataAccess;
 using MediatR;
@@ -18,10 +19,12 @@ namespace BuisinessLogic.Queries.Collections
         public class GetCollectionInfoQueryHandler : IRequestHandler<GetCollectionInfoQuery, GetCollectionInfoResponse>
         {
             private readonly IApplicationDbContext _applicationDb;
+            private readonly ICurrentUser _currentUser;
 
-            public GetCollectionInfoQueryHandler(IApplicationDbContext applicationDb)
+            public GetCollectionInfoQueryHandler(IApplicationDbContext applicationDb, ICurrentUser currentUser)
             {
                 _applicationDb = applicationDb;
+                _currentUser = currentUser;
             }
 
             public async Task<GetCollectionInfoResponse> Handle(GetCollectionInfoQuery request, CancellationToken cancellationToken)
@@ -32,6 +35,13 @@ namespace BuisinessLogic.Queries.Collections
                 if (collection is null)
                 {
                     throw new EntityNotFoundException("Коллекция не найдена");
+                }
+
+                var user = await _applicationDb.Users.FindAsync(_currentUser.Id, cancellationToken);
+
+                if (collection.User != user) 
+                {
+                    throw new UnauthorizedAccessException("Коллекция не принадлежит текущему пользователю");
                 }
 
                 return new GetCollectionInfoResponse

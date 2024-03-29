@@ -5,6 +5,7 @@ using System.Text;
 using BuisinessLogic.Settings;
 using Microsoft.AspNetCore.Identity;
 using DomainLayer.Entities;
+using Presentation.Swagger;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,9 +37,18 @@ var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
 
 builder.Services.AddAuth(signingKey);
 
-builder.Services.AddIdentityCore<User>()
+builder.Services.AddIdentityCore<User>(o =>
+    {
+        o.Password.RequireDigit = true;
+        o.Password.RequireLowercase = true;
+        o.Password.RequireUppercase = false;
+        o.Password.RequireNonAlphanumeric = false;
+        o.Password.RequiredLength = 6;
+    })
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
+
+builder.Services.AddSwagger();
 
 builder.Services.AddApplication(appSettings.Auth);
 

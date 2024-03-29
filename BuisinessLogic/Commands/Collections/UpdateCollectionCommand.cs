@@ -1,4 +1,5 @@
-﻿using BuisinessLogic.Exceptions;
+﻿using BuisinessLogic.Auth.CurrentUser;
+using BuisinessLogic.Exceptions;
 using DataAccess;
 using MediatR;
 
@@ -13,21 +14,28 @@ namespace BuisinessLogic.Commands.Collections
         public class UpdateCollectionCommandHandler : IRequestHandler<UpdateCollectionCommand>
         {
             private readonly IApplicationDbContext _context;
+            private readonly ICurrentUser _currentUser;
 
-            public UpdateCollectionCommandHandler(IApplicationDbContext context)
+            public UpdateCollectionCommandHandler(IApplicationDbContext context, ICurrentUser currentUser)
             {
                 _context = context;
+                _currentUser = currentUser;
             }
 
             public async Task Handle(UpdateCollectionCommand request, CancellationToken cancellationToken)
             {
-                //TODO: переделать когда будет авторизация
-
                 var collection = await _context.Collections.FindAsync(request.Id);
 
                 if (collection == null) 
                 {
                     throw new EntityNotFoundException("Коллекция не найдена");
+                }
+
+                var user = await _context.Users.FindAsync(_currentUser.Id, cancellationToken);
+
+                if (collection.User != user)
+                {
+                    throw new UnauthorizedAccessException("Коллекция не принадлежит текущему пользователю");
                 }
 
                 collection.UpdateCollection(request.Name);

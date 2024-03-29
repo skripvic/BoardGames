@@ -5,6 +5,7 @@ using BuisinessLogic.Dto.Users;
 using BuisinessLogic.Queries;
 using DomainLayer.Entities;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DataAccess.Controllers
@@ -21,11 +22,13 @@ namespace DataAccess.Controllers
         }
 
         [HttpGet("getUserInfo/{userId:guid}")]
+        [Authorize]
         public Task<GetUserInfoResponse> getUserInfo(Guid userId) {
             return _mediator.Send(new GetUserInfoQuery(userId), HttpContext.RequestAborted);
         }
 
         [HttpGet("getUserList")]
+        [Authorize]
         public Task<ICollection<GetUserListDto>> getUserList()
         {
             return _mediator.Send(new GetUserListQuery(), HttpContext.RequestAborted);
@@ -43,19 +46,22 @@ namespace DataAccess.Controllers
             return _mediator.Send(command, HttpContext.RequestAborted);
         }
 
-        [HttpPost("refreshToken")]
-        public Task<AuthResponse> refreshToken(RefreshTokenCommand command)
+        [HttpPost("validateJwt")]
+        [Authorize]
+        public Task<ValidateJwtResponse> validateJwt(ValidateJwtCommand command)
         {
             return _mediator.Send(command, HttpContext.RequestAborted);
         }
 
         [HttpPut("updateUser")]
+        [Authorize]
         public Task updateUser(UpdateUserCommand command)
         {
             return _mediator.Send(command, HttpContext.RequestAborted);
         }
 
         [HttpDelete("deleteUser")]
+        [Authorize]
         public Task deleteUser(DeleteUserCommand command)
         {
             return _mediator.Send(command, HttpContext.RequestAborted);

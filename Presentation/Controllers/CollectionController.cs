@@ -2,12 +2,14 @@
 using BuisinessLogic.Dto.Collections;
 using BuisinessLogic.Queries.Collections;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class CollectionController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -23,10 +25,10 @@ namespace Presentation.Controllers
             return _mediator.Send(new GetCollectionInfoQuery(collectionId), HttpContext.RequestAborted);
         }
 
-        [HttpGet("getCollectionList/{userId:guid}")]
-        public Task<ICollection<GetCollectionListDto>> getCollectionList(Guid userId)
+        [HttpGet("getCollectionList")]
+        public Task<ICollection<GetCollectionListDto>> getCollectionList()
         {
-            return _mediator.Send(new GetCollectionListQuery(userId), HttpContext.RequestAborted);
+            return _mediator.Send(new GetCollectionListQuery(), HttpContext.RequestAborted);
         }
 
         [HttpGet("getGamesInCollectionList/{collectionId:int}")]

@@ -1,4 +1,6 @@
 ﻿using BuisinessLogic.Auth;
+using BuisinessLogic.Auth.AuthService;
+using BuisinessLogic.Auth.CurrentUser;
 using BuisinessLogic.Settings;
 
 namespace BuisinessLogic
@@ -15,6 +17,8 @@ namespace BuisinessLogic
             services.AddSingleton(authSettings);
 
             services.AddScoped<IAuthService, AuthService>();
+
+            services.AddScoped<ICurrentUser, CurrentUser>();
                         
             services.AddMediatR(cf => cf.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly));
 
