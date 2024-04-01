@@ -22,7 +22,6 @@ namespace BuisinessLogic.Commands.Collections
                 _currentUser = currentUser;
             }
 
-
             public async Task<CreateCollectionCommandResponse> Handle(CreateCollectionCommand request, CancellationToken cancellationToken)
             {                
                 var user = await _context.Users.FindAsync(_currentUser.Id, cancellationToken);

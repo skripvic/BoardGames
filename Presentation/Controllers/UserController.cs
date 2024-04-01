@@ -21,10 +21,10 @@ namespace DataAccess.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("getUserInfo/{userId:guid}")]
+        [HttpGet("getUserInfo")]
         [Authorize]
-        public Task<GetUserInfoResponse> getUserInfo(Guid userId) {
-            return _mediator.Send(new GetUserInfoQuery(userId), HttpContext.RequestAborted);
+        public Task<GetUserInfoResponse> getUserInfo() {
+            return _mediator.Send(new GetUserInfoQuery(), HttpContext.RequestAborted);
         }
 
         [HttpGet("getUserList")]

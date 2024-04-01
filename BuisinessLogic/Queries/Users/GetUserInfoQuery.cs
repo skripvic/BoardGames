@@ -1,4 +1,5 @@
-﻿using BuisinessLogic.Dto.Users;
+﻿using BuisinessLogic.Auth.CurrentUser;
+using BuisinessLogic.Dto.Users;
 using BuisinessLogic.Exceptions;
 using DataAccess;
 using MediatR;
@@ -7,27 +8,22 @@ namespace BuisinessLogic.Queries
 {
     public class GetUserInfoQuery : IRequest<GetUserInfoResponse>
     {
-        public GetUserInfoQuery(Guid userId)
-        {
-            UserId = userId;
-        }
-
-        private Guid UserId { get; init; }
 
         public class GetUserInfoQueryHandler : IRequestHandler<GetUserInfoQuery, GetUserInfoResponse>
         {
             private readonly IApplicationDbContext _applicationDb;
+            private readonly ICurrentUser _currentUser;
 
-            public GetUserInfoQueryHandler(IApplicationDbContext applicationDb)
+            public GetUserInfoQueryHandler(IApplicationDbContext applicationDb, ICurrentUser currentUser)
             {
                 _applicationDb = applicationDb;
+                _currentUser = currentUser;
             }
 
             public async Task<GetUserInfoResponse> Handle(GetUserInfoQuery request, CancellationToken cancellationToken)
             {
-                
                 var user = await _applicationDb.Users
-                    .FindAsync(request.UserId, cancellationToken);
+                    .FindAsync(_currentUser.Id, cancellationToken);
 
                 if (user is null)
                 {

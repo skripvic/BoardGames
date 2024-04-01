@@ -6,7 +6,7 @@ namespace BuisinessLogic.Commands.Auth
 {
     public class ValidateJwtCommand : IRequest<ValidateJwtResponse>
     {
-        public string Jwt { get; init; } = string.Empty;
+        public string jwt { get; init; } = string.Empty;
 
         public class ValidateJwtCommandHandler : IRequestHandler<ValidateJwtCommand, ValidateJwtResponse>
         {
@@ -19,7 +19,7 @@ namespace BuisinessLogic.Commands.Auth
 
             public Task<ValidateJwtResponse> Handle(ValidateJwtCommand request, CancellationToken cancellationToken)
             {
-                return _authService.ValidateJwt(request.Jwt);
+                return _authService.ValidateJwt(request.jwt);
             }
         }
     }
