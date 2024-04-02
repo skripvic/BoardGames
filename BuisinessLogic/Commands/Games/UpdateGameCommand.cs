@@ -1,11 +1,13 @@
-﻿using BuisinessLogic.Exceptions;
+﻿using Azure.Core;
+using BuisinessLogic.Commands.Games.Validation;
+using BuisinessLogic.Exceptions;
 using DataAccess;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace BuisinessLogic.Commands.Games
 {
-    public class UpdateGameCommand : IRequest
+    public class UpdateGameCommand : IRequest, IGameCommand
     {
         public int Id { get; init; }
 
@@ -33,10 +35,12 @@ namespace BuisinessLogic.Commands.Games
         public class UpdateGameCommandHandler : IRequestHandler<UpdateGameCommand>
         {
             private readonly IApplicationDbContext _context;
+            private readonly GameCommandValidator _validator;
 
-            public UpdateGameCommandHandler(IApplicationDbContext context)
+            public UpdateGameCommandHandler(IApplicationDbContext context, GameCommandValidator validator)
             {
                 _context = context;
+                _validator = validator;
             }
 
             public async Task Handle(UpdateGameCommand request, CancellationToken cancellationToken)
@@ -48,6 +52,8 @@ namespace BuisinessLogic.Commands.Games
                 {
                     throw new EntityNotFoundException("Игра не найдена");
                 }
+
+                _validator.ValidateOrThrow(request);
 
                 game.UpdateGame
                     (

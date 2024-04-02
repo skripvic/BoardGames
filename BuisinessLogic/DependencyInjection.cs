@@ -1,6 +1,9 @@
 ﻿using BuisinessLogic.Auth;
 using BuisinessLogic.Auth.AuthService;
 using BuisinessLogic.Auth.CurrentUser;
+using BuisinessLogic.Commands.Collections.Validation;
+using BuisinessLogic.Commands.Games.Validation;
+using BuisinessLogic.Commands.Users.Validation;
 using BuisinessLogic.Settings;
 
 namespace BuisinessLogic
@@ -13,6 +16,10 @@ namespace BuisinessLogic
             {
                 throw new ArgumentNullException(nameof(authSettings), "Не заданы настройки аутентификации");
             }
+
+            services.AddTransient<UserCommandValidator>();
+            services.AddTransient<GameCommandValidator>();
+            services.AddTransient<CollectionCommandValidator>();
 
             services.AddSingleton(authSettings);
 

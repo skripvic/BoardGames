@@ -18,6 +18,10 @@ namespace Presentation.Configurations
                 .HasMaxLength(EntityConstants.Game.Alias.Max);
 
             builder
+                .HasIndex(x => x.Alias)
+                .IsUnique();
+
+            builder
                 .Property(x => x.TitleRussian)
                 .HasMaxLength(EntityConstants.Game.TitleRussian.Max);
 

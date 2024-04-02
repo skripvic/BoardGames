@@ -1,4 +1,5 @@
 ﻿using BuisinessLogic.Auth.CurrentUser;
+using BuisinessLogic.Commands.Collections.Validation;
 using BuisinessLogic.Dto.Collections;
 using BuisinessLogic.Exceptions;
 using DataAccess;
@@ -7,7 +8,7 @@ using MediatR;
 
 namespace BuisinessLogic.Commands.Collections
 {
-    public class CreateCollectionCommand : IRequest<CreateCollectionCommandResponse>
+    public class CreateCollectionCommand : IRequest<CreateCollectionCommandResponse>, ICollectionCommand
     {
         public string Name { get; init; } = string.Empty;
 
@@ -15,11 +16,13 @@ namespace BuisinessLogic.Commands.Collections
         {
             private readonly IApplicationDbContext _context;
             private readonly ICurrentUser _currentUser;
+            private readonly CollectionCommandValidator _validator;
 
-            public CreateCollectionCommandHandler(IApplicationDbContext context, ICurrentUser currentUser)
+            public CreateCollectionCommandHandler(IApplicationDbContext context, ICurrentUser currentUser, CollectionCommandValidator validator)
             {
                 _context = context;
                 _currentUser = currentUser;
+                _validator = validator;
             }
 
             public async Task<CreateCollectionCommandResponse> Handle(CreateCollectionCommand request, CancellationToken cancellationToken)
@@ -30,6 +33,8 @@ namespace BuisinessLogic.Commands.Collections
                 {
                     throw new EntityNotFoundException("Пользователь не найден");
                 }
+
+                _validator.ValidateOrThrow(request);
 
                 var newCollection = new Collection(request.Name, user);
 

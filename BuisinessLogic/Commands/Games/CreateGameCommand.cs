@@ -1,11 +1,12 @@
-﻿using BuisinessLogic.Dto.Games;
+﻿using BuisinessLogic.Commands.Games.Validation;
+using BuisinessLogic.Dto.Games;
 using DataAccess;
 using DomainLayer.Entities;
 using MediatR;
 
 namespace BuisinessLogic.Commands.Games
 {
-    public class CreateGameCommand : IRequest<CreateGameCommandResponse>
+    public class CreateGameCommand : IRequest<CreateGameCommandResponse>, IGameCommand
     {
         public string Alias { get; init; } = string.Empty;
         
@@ -31,14 +32,18 @@ namespace BuisinessLogic.Commands.Games
         public class CreateGameCommandHandler : IRequestHandler<CreateGameCommand, CreateGameCommandResponse>
         {
             private readonly IApplicationDbContext _context;
+            private readonly GameCommandValidator _validator;
 
-            public CreateGameCommandHandler(IApplicationDbContext context)
+            public CreateGameCommandHandler(IApplicationDbContext context, GameCommandValidator validator)
             {
                 _context = context;
+                _validator = validator;
             }
 
             public async Task<CreateGameCommandResponse> Handle(CreateGameCommand request, CancellationToken cancellationToken)
             {
+                _validator.ValidateOrThrow(request);
+
                 var newGame = new Game
                     (
                         request.Alias,

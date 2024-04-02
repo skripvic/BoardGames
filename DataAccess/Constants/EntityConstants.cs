@@ -1,4 +1,6 @@
-﻿namespace Presentation.Constants
+﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+
+namespace Presentation.Constants
 {
     public static class EntityConstants
     {
@@ -25,6 +27,18 @@
             public static readonly Size TitleEnglish = new(1, 128);
             
             public static readonly Size PhotoUrl = new(5, 512);
+
+            public static readonly Size PlayersMin = new(1, 100);
+            
+            public static readonly Size PlayersMax = new(1, 100);
+            
+            public static readonly Size AgeMin = new(0, 21);
+
+            public static readonly Size PlayTimeMin = new(1, 1440);
+            
+            public static readonly Size PlayTimeMax = new(1, 1440);
+
+            public static readonly Size Year = new(1900, DateTime.Now.Year);
 
         }
 

@@ -1,11 +1,12 @@
 ﻿using BuisinessLogic.Auth.CurrentUser;
+using BuisinessLogic.Commands.Collections.Validation;
 using BuisinessLogic.Exceptions;
 using DataAccess;
 using MediatR;
 
 namespace BuisinessLogic.Commands.Collections
 {
-    public class UpdateCollectionCommand : IRequest
+    public class UpdateCollectionCommand : IRequest, ICollectionCommand
     {
         public int Id { get; init; }
 
@@ -15,11 +16,14 @@ namespace BuisinessLogic.Commands.Collections
         {
             private readonly IApplicationDbContext _context;
             private readonly ICurrentUser _currentUser;
+            private readonly CollectionCommandValidator _validator;
 
-            public UpdateCollectionCommandHandler(IApplicationDbContext context, ICurrentUser currentUser)
+            public UpdateCollectionCommandHandler(IApplicationDbContext context,
+                ICurrentUser currentUser, CollectionCommandValidator validator)
             {
                 _context = context;
                 _currentUser = currentUser;
+                _validator = validator;
             }
 
             public async Task Handle(UpdateCollectionCommand request, CancellationToken cancellationToken)
@@ -30,6 +34,8 @@ namespace BuisinessLogic.Commands.Collections
                 {
                     throw new EntityNotFoundException("Коллекция не найдена");
                 }
+
+                _validator.ValidateOrThrow(request);
 
                 var user = await _context.Users.FindAsync(_currentUser.Id, cancellationToken);
 
