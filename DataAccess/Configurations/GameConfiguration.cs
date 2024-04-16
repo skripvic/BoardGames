@@ -29,10 +29,6 @@ namespace Presentation.Configurations
                 .Property(x => x.TitleEnglish)
                 .HasMaxLength(EntityConstants.Game.TitleEnglish.Max);
 
-            builder
-                .Property(x => x.PhotoUrl)
-                .HasMaxLength(EntityConstants.Game.PhotoUrl.Max);
-
         }
     }
 }

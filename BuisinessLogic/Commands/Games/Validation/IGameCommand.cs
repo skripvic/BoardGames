@@ -8,8 +8,6 @@
 
         public string TitleRussian { get; init; }
 
-        public string PhotoUrl { get; init; }
-
         public int PlayersMin { get; init; }
 
         public int PlayersMax { get; init; }

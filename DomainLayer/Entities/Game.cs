@@ -9,9 +9,7 @@
         public string TitleRussian { get; private set; } = string.Empty;
         
         public string TitleEnglish { get; private set; } = string.Empty;
-        
-        public string PhotoUrl { get; private set; } = string.Empty;
-        
+                
         public int PlayersMin { get; private set; }
         
         public int PlayersMax { get; private set; }
@@ -26,12 +24,11 @@
         
         public Game() { }
 
-        public Game(string alias, string titleRussian, string titleEnglish, string photoUrl, int playersMin, int playersMax, int ageMin, int playTimeMin, int playTimeMax, int year)
+        public Game(string alias, string titleRussian, string titleEnglish, int playersMin, int playersMax, int ageMin, int playTimeMin, int playTimeMax, int year)
         {
             Alias = alias;
             TitleRussian = titleRussian;
             TitleEnglish = titleEnglish;
-            PhotoUrl = photoUrl;
             PlayersMin = playersMin;
             PlayersMax = playersMax;
             AgeMin = ageMin;
@@ -40,12 +37,11 @@
             Year = year;
         }
         
-        public void UpdateGame(string alias, string titleRussian, string titleEnglish, string photoUrl, int playersMin, int playersMax, int ageMin, int playTimeMin, int playTimeMax, int year)
+        public void UpdateGame(string alias, string titleRussian, string titleEnglish, int playersMin, int playersMax, int ageMin, int playTimeMin, int playTimeMax, int year)
         {
             Alias = alias;
             TitleRussian = titleRussian;
             TitleEnglish = titleEnglish;
-            PhotoUrl = photoUrl;
             PlayersMin = playersMin;
             PlayersMax = playersMax;
             AgeMin = ageMin;

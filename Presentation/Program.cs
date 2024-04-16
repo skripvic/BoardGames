@@ -6,6 +6,7 @@ using BuisinessLogic.Settings;
 using Microsoft.AspNetCore.Identity;
 using DomainLayer.Entities;
 using Presentation.Swagger;
+using Presentation.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -54,7 +55,10 @@ builder.Services.AddApplication(appSettings.Auth);
 
 var app = builder.Build();
 
+
 app.UseCors("AllowAll");
+
+app.UseMiddleware<ExceptionHandlerMiddleware>();
 
 app.MapControllers();
 

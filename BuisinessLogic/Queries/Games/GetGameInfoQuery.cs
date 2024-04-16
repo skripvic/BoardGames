@@ -39,7 +39,6 @@ namespace BuisinessLogic.Queries.Games
                     Alias = game.Alias,
                     TitleRussian = game.TitleRussian,
                     TitleEnglish = game.TitleEnglish,
-                    PhotoUrl = game.PhotoUrl,
                     PlayersMax = game.PlayersMax,
                     PlayersMin = game.PlayersMin,
                     AgeMin = game.AgeMin,

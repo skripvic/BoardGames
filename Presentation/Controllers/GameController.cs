@@ -25,10 +25,22 @@ namespace Presentation.Controllers
             return _mediator.Send(new GetGameInfoQuery(gameId), HttpContext.RequestAborted);
         }
 
+        //[HttpPost("getGamePicture/{alias}")]
+        //public Task<Unit> addGamePicture(AddGamePicture command)
+        //{
+        //    return _mediator.Send(command, HttpContext.RequestAborted);
+        //}
+
         [HttpGet("getGameList")]
         public Task<ICollection<GetGameListDto>> getGameList()
         {
-            return _mediator.Send(new GetGameListQuery(), HttpContext.RequestAborted    );
+            return _mediator.Send(new GetGameListQuery(), HttpContext.RequestAborted);
+        }
+
+        [HttpPost("addGamePicture/{alias}")]
+        public Task<Unit> addGamePicture(string alias)
+        {
+            return _mediator.Send(new AddGamePicture(alias), HttpContext.RequestAborted);
         }
 
         [HttpPost("createGame")]
@@ -36,6 +48,7 @@ namespace Presentation.Controllers
         {
             return _mediator.Send(command, HttpContext.RequestAborted);
         }
+
 
         [HttpPut("updateGame")]
         public Task updateGame(UpdateGameCommand command)

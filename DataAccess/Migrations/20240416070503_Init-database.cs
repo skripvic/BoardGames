@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class InitDatabase : Migration
+    public partial class Initdatabase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,7 +20,6 @@ namespace DataAccess.Migrations
                     Alias = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     TitleRussian = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     TitleEnglish = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    PhotoUrl = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false),
                     PlayersMin = table.Column<int>(type: "int", nullable: false),
                     PlayersMax = table.Column<int>(type: "int", nullable: false),
                     AgeMin = table.Column<int>(type: "int", nullable: false),
@@ -153,6 +152,12 @@ namespace DataAccess.Migrations
                 name: "IX_GameCollections_GamesId",
                 table: "GameCollections",
                 column: "GamesId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Games_Alias",
+                table: "Games",
+                column: "Alias",
+                unique: true);
         }
 
         /// <inheritdoc />

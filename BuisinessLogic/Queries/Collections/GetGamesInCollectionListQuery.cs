@@ -35,8 +35,7 @@ namespace BuisinessLogic.Queries.Collections
                         Id = x.Id,
                         Alias = x.Alias,
                         TitleEnglish = x.TitleEnglish,
-                        TitleRussian = x.TitleRussian,
-                        PhotoUrl = x.PhotoUrl,
+                        TitleRussian = x.TitleRussian
                     })
                     .ToListAsync(cancellationToken);
 

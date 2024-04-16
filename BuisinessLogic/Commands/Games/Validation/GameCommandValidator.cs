@@ -30,13 +30,6 @@ namespace BuisinessLogic.Commands.Games.Validation
             {
                 errors.Add("Некорректное название на русском");
             }
-            
-            if (command.PhotoUrl == null!
-                || command.PhotoUrl.Length < EntityConstants.Game.PhotoUrl.Min
-                || command.PhotoUrl.Length > EntityConstants.Game.PhotoUrl.Max)
-            {
-                errors.Add("Некорректная ссылка");
-            }
 
             if (command.PlayersMin < EntityConstants.Game.PlayersMin.Min
                 || command.PlayersMin > EntityConstants.Game.PlayersMin.Max)

@@ -17,7 +17,7 @@ namespace BuisinessLogic.Commands.Games
 
         public string TitleRussian { get; init; } = string.Empty;
 
-        public string PhotoUrl { get; init; } = string.Empty;
+        public string PictureName { get; init; } = string.Empty;
 
         public int PlayersMin { get; init; }
 
@@ -60,7 +60,6 @@ namespace BuisinessLogic.Commands.Games
                     request.Alias,
                     request.TitleEnglish,
                     request.TitleRussian,
-                    request.PhotoUrl,
                     request.PlayersMin,
                     request.PlayersMax,
                     request.AgeMin,
