@@ -37,10 +37,11 @@ namespace Presentation.Controllers
             return _mediator.Send(new GetGameListQuery(), HttpContext.RequestAborted);
         }
 
-        [HttpPost("addGamePicture/{alias}")]
-        public Task<Unit> addGamePicture(string alias)
+        [HttpPost("addGamePicture")]
+        [RequestFormLimits(ValueLengthLimit = int.MaxValue, MultipartBodyLengthLimit = int.MaxValue)]
+        public Task<Unit> addGamePicture([FromForm] AddGamePicture command)
         {
-            return _mediator.Send(new AddGamePicture(alias), HttpContext.RequestAborted);
+            return _mediator.Send(command, HttpContext.RequestAborted);
         }
 
         [HttpPost("createGame")]

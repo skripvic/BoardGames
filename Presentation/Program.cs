@@ -51,10 +51,12 @@ builder.Services.AddIdentityCore<User>(o =>
 
 builder.Services.AddSwagger();
 
+
 builder.Services.AddApplication(appSettings.Auth);
 
 var app = builder.Build();
 
+app.UseHttpsRedirection();
 
 app.UseCors("AllowAll");
 

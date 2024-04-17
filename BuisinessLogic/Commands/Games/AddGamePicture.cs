@@ -1,21 +1,12 @@
-﻿using BuisinessLogic.Commands.Games.Validation;
-using BuisinessLogic.Dto.Games;
-using DataAccess;
-using MediatR;
-using System.IO;
+﻿using MediatR;
 
 namespace BuisinessLogic.Commands.Games
 {
     public class AddGamePicture : IRequest<Unit>
     {
-        public string alias { get; init; }
+        public string Alias { get; init; }
 
         public IFormFile GamePicture { get; init; }
-
-        public AddGamePicture(string alias)
-        {
-            this.alias = alias;
-        }
 
         public class AddGamePictureHandler : IRequestHandler<AddGamePicture, Unit>
         {
@@ -36,7 +27,7 @@ namespace BuisinessLogic.Commands.Games
                     Directory.CreateDirectory(uploadsFolder);
                 }
 
-                var filePath = Path.Combine(uploadsFolder, request.alias);
+                var filePath = Path.Combine(uploadsFolder, request.Alias);
 
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
